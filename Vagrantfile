@@ -57,6 +57,7 @@ ExecStart=/usr/bin/docker daemon -H fd:// --storage-driver=overlay
 EOF
 
     systemctl enable docker.service
+    usermod -aG docker vagrant
   SHELL
 
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
