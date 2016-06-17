@@ -58,6 +58,9 @@ EOF
 
     systemctl enable docker.service
     usermod -aG docker vagrant
+
+    # Sysdig
+    curl -s https://s3.amazonaws.com/download.draios.com/stable/install-sysdig | bash
   SHELL
 
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
