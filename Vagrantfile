@@ -34,9 +34,9 @@ Vagrant.configure(2) do |config|
 
     # Mesos dependencies
     dnf -y install apr-devel apr-util-devel cyrus-sasl-devel cyrus-sasl-md5    \
-                   libblkid-devel libcurl-devel libevent-devel libnl3-devel    \
-                   openssl-devel python-devel redhat-rpm-config                \
-                   subversion-devel xfsprogs-devel
+                   elfutils-libelf-devel libblkid-devel libcurl-devel          \
+                   libevent-devel libnl3-devel openssl-devel python-devel      \
+                   redhat-rpm-config subversion-devel xfsprogs-devel
     dnf -y install java-1.8.0-openjdk-devel maven
 
     # Test dependencies
