@@ -2,11 +2,11 @@
 # vi: set ft=ruby :
 
 $vagrant_mem = 8192
-$vagrant_cpus = 8
+$vagrant_cpus = 4
 $local_mesos_dir = "../mesos"
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "bento/fedora-23"
+  config.vm.box = "bento/fedora-24"
 
   config.vm.provider "virtualbox" do |v|
     v.customize [
@@ -42,10 +42,6 @@ Vagrant.configure(2) do |config|
     # Test dependencies
     dnf -y install ethtool logrotate nmap-ncat perf
 
-    # Enable additional filesystems
-    echo "overlay" > /etc/modules-load.d/overlayfs.conf
-    echo "xfs" > /etc/modules-load.d/xfs.conf
-
     # Enable Docker
     curl -fsSL https://get.docker.com/ | sh
 
@@ -53,7 +49,7 @@ Vagrant.configure(2) do |config|
     cat > /etc/systemd/system/docker.service.d/overrides.conf <<EOF
 [Service]
 ExecStart=
-ExecStart=/usr/bin/docker daemon -H fd:// --storage-driver=overlay
+ExecStart=/usr/bin/dockerd -s overlay
 EOF
 
     systemctl enable docker.service
