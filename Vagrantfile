@@ -49,7 +49,7 @@ Vagrant.configure(2) do |config|
     cat > /etc/systemd/system/docker.service.d/overrides.conf <<EOF
 [Service]
 ExecStart=
-ExecStart=/usr/bin/dockerd -s overlay
+ExecStart=/usr/bin/dockerd -s overlay2
 EOF
 
     systemctl enable docker.service
