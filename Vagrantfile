@@ -46,7 +46,7 @@ Vagrant.configure(2) do |config|
     curl -fsSL https://get.docker.com/ | sh
 
     mkdir -p /etc/systemd/system/docker.service.d
-    cat > /etc/systemd/system/docker.service.d/overrides.conf <<EOF
+    cat > /etc/systemd/system/docker.service.d/override.conf <<EOF
 [Service]
 ExecStart=
 ExecStart=/usr/bin/dockerd -s overlay2
