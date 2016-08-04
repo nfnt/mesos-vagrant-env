@@ -54,6 +54,13 @@ EOF
 
     systemctl enable docker.service
     usermod -aG docker vagrant
+  SHELL
+
+  config.vm.provision :reload
+
+  config.vm.provision "shell", inline: <<-SHELL
+    # Remove old kernel
+    dnf -y remove $(dnf repoquery --installonly --latest-limit -1 -q)
 
     # Sysdig
     curl -s https://s3.amazonaws.com/download.draios.com/stable/install-sysdig | bash
