@@ -40,7 +40,7 @@ Vagrant.configure(2) do |config|
     dnf -y install java-1.8.0-openjdk-devel maven
 
     # Test dependencies
-    dnf -y install ethtool logrotate nmap-ncat perf
+    dnf -y install bind-utils ethtool logrotate nmap-ncat perf
 
     # Enable Docker
     curl -fsSL https://get.docker.com/ | sh
