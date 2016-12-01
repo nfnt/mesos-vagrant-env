@@ -6,7 +6,7 @@ $vagrant_cpus = 4
 $local_mesos_dir = "../mesos"
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "bento/fedora-24"
+  config.vm.box = "fedora/25-cloud-base"
 
   config.vm.provider "virtualbox" do |v|
     v.customize [
@@ -26,9 +26,10 @@ Vagrant.configure(2) do |config|
   config.vm.network "private_network", type: "dhcp"
 
   config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.vm.synced_folder $local_mesos_dir, "/mesos", type: "nfs"
 
   config.vm.provision "shell", inline: <<-SHELL
+    dnf -y upgrade
+
     # Development tools
     dnf -y install automake ccache cmake gcc-c++ git libtool patch
 
@@ -41,19 +42,6 @@ Vagrant.configure(2) do |config|
 
     # Test dependencies
     dnf -y install bind-utils ethtool logrotate nmap-ncat perf
-
-    # Enable Docker
-    curl -fsSL https://get.docker.com/ | sh
-
-    mkdir -p /etc/systemd/system/docker.service.d
-    cat > /etc/systemd/system/docker.service.d/override.conf <<EOF
-[Service]
-ExecStart=
-ExecStart=/usr/bin/dockerd -s overlay2
-EOF
-
-    systemctl enable docker.service
-    usermod -aG docker vagrant
   SHELL
 
   config.vm.provision :reload
@@ -68,9 +56,12 @@ EOF
 
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
     cd ~
+    git clone https://github.com/apache/mesos.git
+    cd mesos
+    ./bootstrap
     mkdir build
     cd build
-    /mesos/configure --enable-debug --enable-libevent --enable-ssl             \
-                     --enable-xfs-disk-isolator --with-network-isolator
+    ../configure --enable-debug --enable-libevent --enable-ssl                 \
+                 --enable-xfs-disk-isolator --with-network-isolator
   SHELL
 end
