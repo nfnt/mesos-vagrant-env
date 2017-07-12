@@ -1,7 +1,7 @@
 A Mesos development environment for Vagrant.
 
 Made for Mesos developers like me, who use OSX but need to test stuff under
-Linux from time to time. Uses Fedora 25, because it provides recent enough
+Linux from time to time. Uses Fedora 26, because it provides recent enough
 packages for almost all Mesos features.
 
 You'll maybe need to change mem/cpu and configure flags, and you're good to go!

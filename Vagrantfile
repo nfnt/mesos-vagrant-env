@@ -6,7 +6,7 @@ $vagrant_cpus = 4
 $local_mesos_dir = "../mesos"
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "fedora/25-cloud-base"
+  config.vm.box = "fedora/26-cloud-base"
 
   config.vm.provider "virtualbox" do |v|
     v.customize [
@@ -48,7 +48,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", inline: <<-SHELL
     # Remove old kernel
-    dnf -y remove $(dnf repoquery --installonly --latest-limit -1 -q)
+    dnf -y remove $(dnf repoquery --installonly --latest-limit=-1 -q)
 
     # Sysdig
     curl -s https://s3.amazonaws.com/download.draios.com/stable/install-sysdig | bash
@@ -61,7 +61,7 @@ Vagrant.configure(2) do |config|
     ./bootstrap
     mkdir build
     cd build
-    ../configure --enable-debug --enable-libevent --enable-ssl                 \
-                 --enable-xfs-disk-isolator --with-network-isolator
+    ../configure --enable-port-mapping-isolator --enable-libevent --enable-ssl \
+                 --enable-optimize --enable-xfs-disk-isolator
   SHELL
 end
