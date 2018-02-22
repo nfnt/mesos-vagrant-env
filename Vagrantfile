@@ -6,7 +6,7 @@ $vagrant_cpus = 4
 $local_mesos_dir = "../mesos"
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "fedora/26-cloud-base"
+  config.vm.box = "fedora/27-cloud-base"
 
   config.vm.provider "virtualbox" do |v|
     v.customize [
@@ -62,6 +62,6 @@ Vagrant.configure(2) do |config|
     mkdir build
     cd build
     ../configure --enable-port-mapping-isolator --enable-libevent --enable-ssl \
-                 --enable-optimize --enable-xfs-disk-isolator
+                 --enable-optimize --enable-xfs-disk-isolator --enable-grpc
   SHELL
 end
